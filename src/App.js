@@ -29,14 +29,15 @@ function App() {
       }
     }
 
-  const showAlert = (message, type)=>{
+  const showAlert = (message, type, color)=>{
     setAlert({
       msg: message,
-      type: type
+      type: type,
+      color: color
     })
     setTimeout(()=>{
       setAlert(null);
-    }, 1600);
+    }, 2000);
   }
 
   return (

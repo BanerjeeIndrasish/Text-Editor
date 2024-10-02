@@ -1,43 +1,57 @@
 import React, { useState } from 'react'
 
 export default function TextBox(props) {
-
+      const [text, setText] = useState("Enter Text Here");
       const onStartTyping = () => {
             if (text === "Enter Text Here")
                   setText("");
       }
 
+      const emptyText = ()=>{
+            if(text.trim()===''){
+                  props.showAlert("No Text To Execute", "warning", "red");
+                  console.log("No text ", text);
+                  return true;
+            }
+            else{return false}
+      }
+
       const upButtonClick = () => {
+            if(emptyText()) return;
             let newText = text.toUpperCase();
             setText(newText);
             props.showAlert("Converted To Uppercase", "success");
       }
 
       const lowButtonClick = () => {
-            console.log("Upper-Case Function Called " + text);
+            if(emptyText()) return;
             let newText = text.toLowerCase();
             setText(newText);
             props.showAlert("Converted To Lowercase", "success");
       }
 
       const clearButtonClick = () => {
+            if(emptyText()) return;
             setText("");
             props.showAlert("Text Cleared", "success");
       }
 
       const removeAllSpacesButtonClick = () => {
+            if(emptyText()) return;
             let newText = text.split(" ").join("");
             setText(newText);
             props.showAlert("All Spaces Removed", "success");
       }
 
       const removeExtraSpacesButtonClick = () => {
+            if(emptyText()) return;
             let newText = text.replace(/ +/g, ' ');
             setText(newText);
             props.showAlert("All Extra Spaces Removed", "success");
       }
 
       const copyText = () => {
+            if(emptyText()) return;
             navigator.clipboard.writeText(text);
             props.showAlert("Text Copied To Clipboard", "success");
       }
@@ -47,7 +61,6 @@ export default function TextBox(props) {
             setText(event.target.value);
       }
 
-      const [text, setText] = useState("Enter Text Here");
       return (
             <>
                   <div className='Container' style={{ color: props.mode === 'dark' ? 'white' : 'black' }}>
@@ -57,12 +70,12 @@ export default function TextBox(props) {
                                     onClick={onStartTyping} onChange={onChangeEvent} id="TextBox" rows="5"></textarea>
                         </div>
                         <div className="buttons">
-                              <button className="btn btn-primary" onClick={upButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Convert To Uppercase</button>
-                              <button className="btn btn-primary mx-3" onClick={lowButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Convert To Lowercase</button>
-                              <button className="btn btn-primary" onClick={clearButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Clear Text</button>
-                              <button className="btn btn-primary mx-3" onClick={removeAllSpacesButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Remove All Spaces</button>
-                              <button className="btn btn-primary" onClick={removeExtraSpacesButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Remove Extra Spaces</button>
-                              <button className="btn btn-primary mx-3" onClick={copyText} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Copy To Clipboard</button>
+                              <button className="btn btn-success" onClick={upButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Convert To Uppercase</button>
+                              <button className="btn btn-success" onClick={lowButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Convert To Lowercase</button>
+                              <button className="btn btn-success" onClick={removeAllSpacesButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Remove All Spaces</button>
+                              <button className="btn btn-success" onClick={removeExtraSpacesButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Remove Extra Spaces</button>
+                              <button className="btn btn-success" onClick={clearButtonClick} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Clear Text</button>
+                              <button className="btn btn-success" onClick={copyText} style={{ color: props.mode === 'dark' ? 'white' : "black" }}>Copy To Clipboard</button>
                         </div>
 
                   </div>
